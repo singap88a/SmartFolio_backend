@@ -26,11 +26,16 @@ app.use('/api/auth', authRoutes);
 app.use('/api/portfolio', portfolioRoutes);
 app.use('/api/ai', aiRoutes);
 
-// Connect to DB and Start Server
-dbConnect().then(() => {
+// Connect to DB
+dbConnect().catch(err => {
+  console.error('Database connection failed', err);
+});
+
+// Start Server (only locally, Vercel handles it serverless)
+if (process.env.NODE_ENV !== 'production') {
   app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
   });
-}).catch(err => {
-  console.error('Database connection failed', err);
-});
+}
+
+export default app;
