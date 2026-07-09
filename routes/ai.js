@@ -77,7 +77,7 @@ ${inputText}
 
     const result = await model.generateContent(prompt);
     let responseText = result.response.text();
-    
+
     // Clean markdown if it exists
     if (responseText.startsWith('\`\`\`json')) {
       responseText = responseText.replace(/^\`\`\`json/, '').replace(/\`\`\`$/, '').trim();
@@ -161,7 +161,7 @@ ${inputText}
     const prompt = getPrompt(extractedText);
     const result = await model.generateContent(prompt);
     let responseText = result.response.text();
-    
+
     if (responseText.startsWith('\`\`\`json')) {
       responseText = responseText.replace(/^\`\`\`json/, '').replace(/\`\`\`$/, '').trim();
     } else if (responseText.startsWith('\`\`\`')) {
@@ -195,7 +195,7 @@ router.post('/edit-portfolio', async (req, res) => {
     const dataToSend = { ...currentData };
     const savedHeroImage = dataToSend.heroImage;
     const savedLogo = dataToSend.logo;
-    
+
     // We remove them or replace with placeholders
     if (dataToSend.heroImage && dataToSend.heroImage.length > 1000) {
       dataToSend.heroImage = "[BASE64_IMAGE_OMITTED]";
@@ -225,7 +225,7 @@ INSTRUCTIONS:
     const prompt = getPrompt(text, dataToSend);
     const result = await model.generateContent(prompt);
     let responseText = result.response.text();
-    
+
     if (responseText.startsWith('\`\`\`json')) {
       responseText = responseText.replace(/^\`\`\`json/, '').replace(/\`\`\`$/, '').trim();
     } else if (responseText.startsWith('\`\`\`')) {
