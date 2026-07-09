@@ -42,14 +42,16 @@ app.use('/api/portfolio', portfolioRoutes);
 app.use('/api/ai', aiRoutes);
 
 // Connect to DB
-dbConnect().catch(err => {
-  console.error('Database connection failed', err);
+dbConnect().then(() => {
+  console.log('\x1b[32m✔ Database Connected Successfully!\x1b[0m');
+}).catch(err => {
+  console.error('\x1b[31m✘ Database connection failed:\x1b[0m', err);
 });
 
 // Start Server (only locally, Vercel handles it serverless)
 if (process.env.NODE_ENV !== 'production') {
   app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
+    console.log(`\x1b[32m✔ Server running on port ${PORT} - Backend is Healthy!\x1b[0m`);
   });
 }
 

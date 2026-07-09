@@ -9,12 +9,19 @@ const PortfolioSchema = new mongoose.Schema({
   username: {
     type: String,
     required: true,
+  },
+  subdomain: {
+    type: String,
+    required: true,
     unique: true,
+    trim: true,
+    lowercase: true,
+    match: [/^[a-z0-9-]+$/, 'Subdomain can only contain lowercase letters, numbers, and hyphens'],
   },
   templateId: {
     type: String,
     required: true,
-    enum: ['developer'],
+    enum: ['developer', 'creative'],
     default: 'developer',
   },
   data: {
@@ -75,5 +82,8 @@ const PortfolioSchema = new mongoose.Schema({
     default: Date.now,
   }
 });
+
+// Ensure a user can only have one portfolio document per template
+PortfolioSchema.index({ user: 1, templateId: 1 }, { unique: true });
 
 export default mongoose.models.Portfolio || mongoose.model('Portfolio', PortfolioSchema);
